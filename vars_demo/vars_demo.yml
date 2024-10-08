@@ -1,0 +1,9 @@
+- name: Variables demonstration
+  hosts: todos
+  become: false
+  tasks:
+
+    - name: Show value of my_colour
+      ansible.builtin.debug:
+        msg: the value of the variable my colour is {{ my_colour }}
+

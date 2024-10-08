@@ -1,0 +1,14 @@
+[rhel]
+servera
+serverb
+
+[rocky]
+serverc
+serverd
+
+[dbservers]
+serverd
+
+[todos:children]
+rhel
+rocky
