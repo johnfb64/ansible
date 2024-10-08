@@ -94,4 +94,3 @@ def main_game():
 
 # Ejecutar el juego
 main_game()
-
