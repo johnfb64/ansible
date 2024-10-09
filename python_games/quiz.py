@@ -60,6 +60,31 @@ ansible_facts: {
     ...
 }
         """
+    },
+    # Nuevas preguntas agregadas
+    {
+        "question": "¿Cómo se edita un archivo secreto con Ansible Vault?",
+        "answer": "ansible-vault edit secret.yml",
+        "output": """
+EXAMPLE OUTPUT:
+Archivo secreto descifrado y listo para edición.
+        """
+    },
+    {
+        "question": "¿Cómo se resuelven errores de sintaxis con Vault en Ansible?",
+        "answer": """ansible-navigator run -m stdout --pae false create_users.yml --syntax-check --vault-id @prompt""",
+        "output": """
+EXAMPLE OUTPUT:
+No se encontraron errores de sintaxis.
+        """
+    },
+    {
+        "question": "¿Cómo se ejecuta un playbook con una contraseña de Vault almacenada en un archivo?",
+        "answer": """ansible-navigator run -m stdout create_users.yml --vault-password-file=vault-pass""",
+        "output": """
+EXAMPLE OUTPUT:
+Playbook ejecutado correctamente con secretos descifrados.
+        """
     }
 ]
 
@@ -98,7 +123,7 @@ def normalize_answer(answer):
 def is_answer_correct(user_answer, correct_answer):
     return normalize_answer(user_answer) == normalize_answer(correct_answer)
 
-def ask_question(question_data, time_limit=30):
+def ask_question(question_data, time_limit=60):  # Cambié el tiempo límite a 60 segundos
     """Función para hacer una pregunta y verificar la respuesta"""
     print(question_data["question"])
     display_help_message()
@@ -111,7 +136,7 @@ def ask_question(question_data, time_limit=30):
         if time.time() - start_time > time_limit:
             print(colored_text("¡Tiempo agotado!\n", "red"))
             return False
-        
+
         # Verifica la respuesta
         if is_answer_correct(answer, question_data["answer"]):
             print(colored_text("¡Correcto!\n", "green"))
@@ -124,12 +149,21 @@ def ask_question(question_data, time_limit=30):
         print(colored_text(f"Hubo un error: {e}", "red"))
         return False
 
+def repeat_incorrect_questions(incorrect_questions):
+    """Función para repetir las preguntas incorrectas si el usuario lo desea"""
+    repeat = input(colored_text("\n¿Quieres repetir las preguntas incorrectas? (sí/no): ", "yellow")).strip().lower()
+    if repeat == 'sí' or repeat == 'si':
+        for question_data in incorrect_questions:
+            correct = ask_question(question_data)
+            input("\nPresiona Enter para continuar...")
+            clear_screen()
+
 def play_ansible_inventory_quiz():
     """Juego de preguntas sobre comandos de inventarios en Ansible"""
     print("¡Bienvenido al juego de comandos sobre Inventarios en Ansible!\n")
     score = 0
     total_questions = len(questions)
-    
+
     # Mezclar preguntas para que sean aleatorias
     random.shuffle(questions)
 
@@ -141,8 +175,8 @@ def play_ansible_inventory_quiz():
         if correct:
             score += 1
         else:
-            incorrect_answers.append(question_data["question"])
-        
+            incorrect_answers.append(question_data)
+
         input("\nPresiona Enter para continuar a la siguiente pregunta...")
         clear_screen()
 
@@ -153,7 +187,10 @@ def play_ansible_inventory_quiz():
     if incorrect_answers:
         print(colored_text("Resumen de preguntas incorrectas:\n", "yellow"))
         for question in incorrect_answers:
-            print(f"- {question}")
+            print(f"- {question['question']}")
+
+        # Repetir preguntas incorrectas si el usuario lo desea
+        repeat_incorrect_questions(incorrect_answers)
 
     if score == total_questions:
         print(colored_text("¡Excelente! ¡Conoces muy bien los comandos de Ansible para inventarios!", "green"))
