@@ -1,0 +1,24 @@
+---
+- name: loop example with users
+  hosts: servers
+  become: true
+  gather_facts: false
+    
+  vars:
+    usuarios:
+      - john
+      - elvira
+      - diana
+      - jenny
+
+  tasks:
+
+    - name: Crear usuarios con loop
+      loop: "{{ usuarios }}"
+      ansible.builtin.user:
+        name: "{{ item }}"
+        #my_state es una variable, que en caso de no estar definida por defecto pondra "present"
+        state: "{{ my_state | default('present') }}"
+        password: "{{ my_password | default('pepe123') | password_hash('sha512') }}"
+        update_password: on_create
+

@@ -1,0 +1,39 @@
+mygroups:
+  - simpsons
+  - flanders
+
+myusers:
+  homer:
+    groups:
+      - simpsons
+      - wheel
+    password: donuts123
+
+  marge:
+    groups: simpsons
+    password: bluehair
+
+  bart:
+    groups: simpsons
+    password: eatmyshorts
+
+  lisa:
+    groups: simpsons
+    password: saxophone
+
+  ned:
+    groups: flanders
+    password: holydiddly
+
+  maude:
+    groups: flanders
+    password: heavenbound
+
+  rod:
+    groups: flanders
+    password: lefty123
+
+  todd:
+    groups: flanders
+    password: biblekid
+
