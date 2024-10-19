@@ -1,0 +1,11 @@
+[rocky_servers]
+servera ansible_host=192.168.1.112
+serverb ansible_host=192.168.1.113
+serverc ansible_host=192.168.1.114
+serverd ansible_host=192.168.1.115
+
+[servers]
+servera
+serverb
+serverc
+serverd

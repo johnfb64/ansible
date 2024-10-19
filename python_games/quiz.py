@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import os
 import random
 import time
@@ -61,7 +63,6 @@ ansible_facts: {
 }
         """
     },
-    # Nuevas preguntas agregadas
     {
         "question": "¿Cómo se edita un archivo secreto con Ansible Vault?",
         "answer": "ansible-vault edit secret.yml",
@@ -85,6 +86,45 @@ No se encontraron errores de sintaxis.
 EXAMPLE OUTPUT:
 Playbook ejecutado correctamente con secretos descifrados.
         """
+    },
+    {
+        "question": "¿Cuál es la configuración mínima recomendada para trabajar con archivos YAML en Vim?",
+        "answer": """set et\nset ts=2 sw=2 sts=2\nset nu\nset cuc""",
+        "output": """
+EXAMPLE OUTPUT:
+# Estas configuraciones permiten:
+- Convertir tabulaciones en espacios (fundamental en YAML).
+- Establecer la indentación a 2 espacios (convención en YAML).
+- Habilitar la numeración de líneas y mostrar la columna del cursor.
+        """
+    },
+    # Nueva pregunta sobre la estructura de ansible-navigator.yml
+    {
+        "question": "¿Cómo es la estructura mínima de un archivo ansible-navigator.yml?",
+        "answer": """navigator:\n  mode: interactive\n  container-engine: podman\n  execution-environment:\n    enabled: true\n  ansible:\n    config: ansible.cfg\n    playbook-artifact:\n      enable: true\n      save-as: playbook_artifact.json\n    display:\n      color: true\n  logging:\n    append: true\n    file: /tmp/navigator.log\n    level: info\n  inventory:\n    entries:\n      - inventory.yml""",
+        "output": """
+EXAMPLE OUTPUT:
+---
+navigator:
+  mode: interactive
+  container-engine: podman
+  execution-environment:
+    enabled: true
+  ansible:
+    config: ansible.cfg
+    playbook-artifact:
+      enable: true
+      save-as: playbook_artifact.json
+    display:
+      color: true
+  logging:
+    append: true
+    file: /tmp/navigator.log
+    level: info
+  inventory:
+    entries:
+      - inventory.yml
+        """
     }
 ]
 
@@ -100,8 +140,8 @@ def colored_text(text, color):
     return f"{colors.get(color, '')}{text}{colors['reset']}"
 
 def clear_screen():
-    """Función para limpiar la pantalla"""
-    os.system('cls' if os.name == 'nt' else 'clear')
+    """Función para limpiar la pantalla en Linux"""
+    os.system('clear')
 
 # Mejora: Quitar el mensaje de ejemplo de respuesta
 def display_help_message():
@@ -123,7 +163,7 @@ def normalize_answer(answer):
 def is_answer_correct(user_answer, correct_answer):
     return normalize_answer(user_answer) == normalize_answer(correct_answer)
 
-def ask_question(question_data, time_limit=60):  # Cambié el tiempo límite a 60 segundos
+def ask_question(question_data, time_limit=60):
     """Función para hacer una pregunta y verificar la respuesta"""
     print(question_data["question"])
     display_help_message()
@@ -152,7 +192,7 @@ def ask_question(question_data, time_limit=60):  # Cambié el tiempo límite a 6
 def repeat_incorrect_questions(incorrect_questions):
     """Función para repetir las preguntas incorrectas si el usuario lo desea"""
     repeat = input(colored_text("\n¿Quieres repetir las preguntas incorrectas? (sí/no): ", "yellow")).strip().lower()
-    if repeat == 'sí' or repeat == 'si':
+    if repeat in ['sí', 'si']:
         for question_data in incorrect_questions:
             correct = ask_question(question_data)
             input("\nPresiona Enter para continuar...")
