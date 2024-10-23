@@ -1,0 +1,24 @@
+---
+# tasks file for mi_host
+
+- name: Asegurese que httpd este instalado.
+  ansible.builtin.dnf:
+    name: httpd
+    state: present
+  
+- name: Asegurese que httpd este instalado y habilitado
+  ansible.builtin.service:
+    name: httpd
+    state: started
+    enabled: true
+
+
+- name: Validar archivo de host instalado
+  ansible.builtin.template:
+    src: vhost.conf.j2
+    dest: /etc/httpd/conf.d/vhost.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - restart httpd

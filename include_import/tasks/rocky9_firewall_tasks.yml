@@ -1,0 +1,17 @@
+- name: install firewall-cmd on rocky 9
+  ansible.builtin.dnf:
+    name: firewalld
+    state: present
+
+- name: start and enable firealld service
+  ansible.builtin.service:
+    name: firewalld
+    state: started
+    enabled: yes
+
+- name: Open http port 80
+  ansible.posix.firewalld:
+    service: http
+    permanent: true
+    state: enabled
+    immediate: yes

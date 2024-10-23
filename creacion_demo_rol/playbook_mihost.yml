@@ -1,0 +1,22 @@
+---
+- name: Uso del rol mi_host
+  hosts: servera
+  pre_tasks: 
+    - name: pre_tasks message
+      ansible.builtin.debug:
+        msg: 'Asegure la configuración del webserver'
+
+  roles:
+    - mi_host
+
+  post_tasks:
+    - name: contenido html instalado
+      ansible.builtin.copy:
+        src: files/html/
+        dest: "/var/www/vhosts/{{ ansible_hostname }}"
+
+    - name: mensaje post_tasks
+      ansible.builtin.debug:
+        msg: 'El webserver esta configurado'      
+
+

@@ -1,0 +1,14 @@
+---
+- name: Manage Rocky 9 servers - Using import tasks
+  hosts: rocky_servers
+  gather_facts: yes
+  
+  tasks:
+    - name: Import web server tasks for rocky 9
+      import_tasks: rocky9_webserver_tasks.yml
+      when: ansible_distribution_major_version == "9"
+
+    - name: Import firewall tasks for rocky 9
+      import_tasks: rocky9_firewall_tasks.yml
+      when: ansible_distribuition_major_version == "9"
+

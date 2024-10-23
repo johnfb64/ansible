@@ -1,0 +1,14 @@
+---
+- name: Manage Rocky 9 servers - using include tasks
+  hosts: rocky_servers
+  gather_facts: yes
+
+  tasks:
+
+    - name: INclude webserver tasks for Rocky 9
+      include_tasks: rocky9_webserver_tasks.yml
+      when: ansible_distribution_major_version == "9"
+
+    - name: INlcude firewall tasks for rocky 9
+      include_tasks: rocky9_firewall_tasks.yml
+      when: ansible_distribution_major_version == "9"

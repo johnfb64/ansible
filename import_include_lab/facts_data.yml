@@ -1,0 +1,8 @@
+---
+- name: Verificar hechos del servidor
+  hosts: servers
+  gather_facts: yes
+  tasks:
+    - name: Mostrar hechos
+      ansible.builtin.debug:
+        var: ansible_facts
