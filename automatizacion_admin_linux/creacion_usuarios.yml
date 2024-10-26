@@ -1,0 +1,8 @@
+---
+- name: Creacion de usuarios
+  hosts: servers
+  become: true
+  vars_files:
+    - secret.yml
+  roles: 
+    - crear_usuarios

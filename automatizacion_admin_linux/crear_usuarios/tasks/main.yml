@@ -1,0 +1,20 @@
+---
+- name: Creacion de grupos
+  ansible.builtin.group:
+    name: "{{ item.nombre }}"
+    gid: "{{ item.gid }}"
+    state: present
+  loop: "{{ grupos }}"
+  when: grupos is defined
+
+- name: Creacion de usuarios
+  ansible.builtin.user:
+    name: "{{ item.nombre }}"
+    uid: "{{ item.uid }}"
+    group: "{{ item.grupo }}"
+    comment: "{{ item.comentario }}"
+    password: "{{ secreto }}"
+    state: present
+  loop: "{{ usuarios }}"
+  when: usuarios is defined
+

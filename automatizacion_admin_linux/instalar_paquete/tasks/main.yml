@@ -1,0 +1,6 @@
+---
+- name: Instalacion de {{ nombre_paquete }}
+  ansible.builtin.dnf:
+    name: "{{ nombre_paquete }}"
+    state: present
+  when: nombre_paquete != ""

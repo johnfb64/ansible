@@ -1,0 +1,48 @@
+---
+grupos:
+  - nombre: desarrollo
+    gid: 1001
+  - nombre: produccion
+    gid: 1002
+
+usuarios:
+  - nombre: ana 
+    uid: 3001
+    comentario: Desarrolladora frontend
+    grupo: desarrollo
+  - nombre: carlos
+    uid: 3002
+    comentario: Ingeniero backend
+    grupo: desarrollo
+  - nombre: diana
+    uid: 3003
+    comentario: Tester QA
+    grupo: desarrollo
+  - nombre: pedro
+    uid: 3004
+    comentario:
+    grupo: produccion
+  - nombre: laura
+    uid: 3005
+    comentario: Desarrolladora backend
+    grupo: desarrollo
+  - nombre: marcos
+    uid: 3006
+    comentario: Ingeniero DevOps
+    grupo: produccion
+  - nombre: sofia
+    uid: 3007
+    comentario: Administradora de base de datos
+    grupo: produccion
+  - nombre: jorge
+    uid: 3008
+    comentario: Analista de seguridad
+    grupo: produccion
+  - nombre: lucia
+    uid: 3009
+    comentario: Desarrolladora mobile
+    grupo: desarrollo
+  - nombre: miguel
+    uid: 3010
+    comentario: Ingeniero de datos
+    grupo: produccion

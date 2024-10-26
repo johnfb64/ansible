@@ -1,0 +1,7 @@
+---
+- name: Instalacion de paquete dnf
+  hosts: servers
+  roles:
+    - role: instalar_paquete
+      vars: 
+        nombre_paquete:
