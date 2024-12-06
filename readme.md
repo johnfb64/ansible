@@ -14,7 +14,7 @@ ansible all --become -a "id"
 #ansible ejecutara todo como usuario root, volviendose administrador. 
 
 test line
- 
+test line 2 
 --------------------------------------------
 
 
