@@ -1,0 +1,29 @@
+---
+- name: Configuración de un servidor web
+  hosts: serverb
+  become: yes  # Escalar privilegios a root (sudo)
+  tasks:
+    - name: Asegurar que httpd esté instalado
+      yum:
+        name: httpd
+        state: present
+
+    - name: Crear un archivo de prueba en /var/www/html
+      copy:
+        dest: /var/www/html/index.html
+        content: |
+          <html>
+          <head><title>Prueba Ansible</title></head>
+          <body>
+          <h1>¡Automatizado con Ansible!</h1>
+          </body>
+          </html>
+        owner: apache
+        group: apache
+        mode: '0644'
+
+    - name: Asegurarse de que el servicio httpd esté habilitado y corriendo
+      service:
+        name: httpd
+        state: started
+        enabled: true

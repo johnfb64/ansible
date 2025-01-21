@@ -1,0 +1,16 @@
+[servers]
+server[a:d]
+
+[ubuntu]
+serverc
+
+[suse]
+serverd
+
+[rocky]
+servera
+serverb
+
+[rockysuse:children]
+rocky
+suse
